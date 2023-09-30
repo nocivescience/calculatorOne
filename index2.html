@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+    }
+    .container{
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        width: 600px;
+        height: 600px;
+        border: 1px solid rgb(89, 139, 255);
+        position: relative;
+    }
+</style>
+<body>
+    <div class="container" id="container"></div>
+    <script>
+        const espacioW= 600/5;
+        const espacioH= 600/5;
+        const grosor= 50;
+        let walls= [], ball= {x: 30, y: 30};
+        let container = document.getElementById('container');
+        walls=[
+            {column: 1, row: 0, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 2, row: 0, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 3, row: 0, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 4, row: 0, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 5, row: 0, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 0, row: 0, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 0, row: 1, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 0, row: 2, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 0, row: 3, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 0, row: 4, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 5, row: 0, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 5, row: 1, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 5, row: 2, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 5, row: 3, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 5, row: 4, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 1, row: 5, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 2, row: 5, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 3, row: 5, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 4, row: 5, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 5, row: 5, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 1, row: 1, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 2, row: 2, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 3, row: 3, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 4, row: 4, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 1, row: 4, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 4, row: 0, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 3, row: 1, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 2, row: 2, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 1, row: 3, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: false},
+            {column: 4, row: 4, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+            {column: 5, row: 2, length: espacioH, color: 'rgb(89, 139, 255)', horizontal: true},
+        ].map(wall=>({
+            x: wall.column*espacioW,
+            y: wall.row*espacioH,
+            length: wall.length,
+            color: wall.color,
+            horizontal: wall.horizontal
+        }))
+        console.log(walls[0].x);
+        function wallsDraw(){
+            container.innerHTML= '';
+            walls.forEach(ball=>{
+                let div= document.createElement('div');
+                div.style.width= ball.length/grosor+'px';
+                div.style.height= ball.length+'px';
+                div.style.backgroundColor= ball.color;
+                div.style.position= 'absolute';
+                div.style.left= ball.x+'px';
+                div.style.top= ball.y+'px';
+                div.style.transformOrigin= 'top left';    
+                div.style.transform= ball.horizontal? 'rotate(90deg)': 'rotate(0deg)';
+                container.appendChild(div);
+            })
+        }
+        wallsDraw();
+        let div= document.createElement('div');
+        function ballDraw(){
+            ball.x= ball.x+1;
+            div.style.width= grosor+'px';
+            div.style.height= grosor+'px';
+            div.style.backgroundColor= 'red';
+            div.style.position= 'absolute';
+            div.style.left= ball.x+'px';
+            div.style.top= ball.y+'px';
+            div.style.borderRadius= '50%';
+            container.appendChild(div);
+        }
+        setInterval(()=>{
+            ballDraw();
+        }, 10);
+    </script>
+</body>
+</html>
